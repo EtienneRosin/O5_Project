@@ -1,0 +1,7 @@
+README.md
+setup.py
+schrodinger_engine.egg-info/PKG-INFO
+schrodinger_engine.egg-info/SOURCES.txt
+schrodinger_engine.egg-info/dependency_links.txt
+schrodinger_engine.egg-info/requires.txt
+schrodinger_engine.egg-info/top_level.txt

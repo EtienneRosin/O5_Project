@@ -1,0 +1,1 @@
+from .consistency import configuration_is_consistent
