@@ -20,7 +20,8 @@ setup(
         'numpy',
         'scipy',
         'matplotlib',
-        'tqdm'    
+        'tqdm',
+        'cmasher'  
         ],
     include_package_data=True,
 )

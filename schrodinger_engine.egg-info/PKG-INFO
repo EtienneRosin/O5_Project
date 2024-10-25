@@ -1,7 +1,7 @@
 Metadata-Version: 2.1
 Name: schrodinger_engine
 Version: 0.1
-Summary: A project simulating the Scrödinger equation.
+Summary: A project simulating the periodical unidimensionnal Scrödinger equation.
 Author: Etienne Rosin
 Author-email: etienne.alex.rosin@cern.ch
 Classifier: Programming Language :: Python :: 3
@@ -12,3 +12,12 @@ Description-Content-Type: text/markdown
 Requires-Dist: numpy
 Requires-Dist: scipy
 Requires-Dist: matplotlib
+Requires-Dist: tqdm
+
+This project deals with the 1 dimensionnal periodic Schrödinger equation.
+
+
+To run the simulation :
+    - go within the `O5_PROJECT/` folder in a terminal
+    - enter `pip install -e .` to install this project as developer
+    - find the `schrodinger_engine/simulation/simulation.py` file and run it

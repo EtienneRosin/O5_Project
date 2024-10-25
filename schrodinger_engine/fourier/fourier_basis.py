@@ -38,7 +38,7 @@ class FourierBasis:
         # @var mesh
         # discretized domain.
         self.mesh: np.ndarray[float] = np.linspace(
-            start=-L/2, stop=L / 2, num=N_x, endpoint=False)
+            start = -L/2, stop = L/2, num = N_x, endpoint = False)
 
     def k_n(self, n: Union[int, np.ndarray]) -> Union[float, np.ndarray]:
         """
@@ -120,6 +120,7 @@ class FourierBasis:
             raise ValueError("f should be a callable or a numpy array.")
 
         c_tilde = (np.sqrt(self.L)/self.N_x)*sp.fft.fft(f_values)
+        # c_tilde = (np.sqrt(self.L)/(2*np.pi*self.N_x))*sp.fft.fft(f_values)
         return c_tilde
 
     def display_decomposition(self, f: Union[callable, np.ndarray[float]]) -> None:

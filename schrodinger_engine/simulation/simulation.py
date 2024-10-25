@@ -59,14 +59,14 @@ class Simulation:
         self.fourier_basis = FourierBasis(L = spatial_domain.width, N_x = spatial_domain.N)
         
         # self.kinetic_energy_propagator = self.get_kinetic_energy_propagator()
-        
-        
         self.solution = None
         pass
     
     def get_kinetic_energy_operator(self):
         k_vals = self.fourier_basis.k_values()
-        return np.diag(0.5 * k_vals**2)  # Hamiltonian for the kinetic energy
+        
+        return np.diag(0.5 * k_vals**2)
+        # return np.diag(0.5 * k_vals**2)  # Hamiltonian for the kinetic energy
     
     def get_kinetic_energy_propagator(self):
         # K = sp.sparse.linalg.expm(- 1j * K * dt)
@@ -93,6 +93,7 @@ class Simulation:
         dx = self.spatial_domain.step
         lst_t = self.temporal_domain.mesh
         normalization_factor = np.sqrt(L) / dx
+        # normalization_factor = np.sqrt(L) / self.spatial_domain.N
         
         if self.potential is None:
             for i in tqdm(range(1, self.temporal_domain.N), desc="Simulation Progress", unit="time step"):
@@ -142,9 +143,7 @@ class Simulation:
         mag = np.abs(values)**2
         phase = np.angle(values)
             
-        cmap = "cmr.iceburn"
-        # cmap = "cmr.guppy"
-        cmap = "hsv"
+        cmap = "cmr.lavender"
         norm = plt.Normalize(-np.pi, np.pi)
         line = MulticolorLine2d(x = lst_x, y = mag, z = phase, cmap=cmap, norm=norm, label = r"$\left|\psi(x)\right|^2$")
         ax.add_collection(line)
@@ -160,7 +159,7 @@ class Simulation:
             mag = np.abs(values)**2
             phase = np.angle(values)
             
-            real_line.set_ydata( values.real)
+            real_line.set_ydata(values.real)
             
             segments = line.create_segments(lst_x, mag)
             line.set_segments(segments)
@@ -183,7 +182,7 @@ if __name__ == "__main__":
         spatial_domain = SpatialDomain(boundaries = [-L/2, L/2], N = N_x),
         temporal_domain = TemporalDomain(t_end = T, N = N_t),
         initial_condition = GaussianWavePacket(x_0=0.0, sigma=2.0, lamb = 4),
-        potential = Wall(x_0 = 30, V_0 = 1e20, b = 5)
+        potential = Wall(x_0 = 30, V_0 = 1e2, b = 5)
         # potential = Wall(x_0 = 30, V_0 = 1e1, b = 5)
         # potential=HarmonicOscillator(x_0=0, omega=1e0)
         )

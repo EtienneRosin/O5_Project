@@ -1,4 +1,4 @@
-from .potential import Potential, TimeDependentPotential
-from .wall import Wall
-from .kronig_penney import KronigPenney
+from .potential import Potential
+from .time_dependant_potential import TimeDependentPotential
 from .harmonic_oscillator import HarmonicOscillator
+from .wall import Wall

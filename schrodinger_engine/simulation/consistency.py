@@ -56,7 +56,7 @@ def configuration_is_consistent(
                 if not (spatial_factor * lamb < L):
                     raise ValueError(f"Non-satisfied condition : λ << L  (here λ = {lamb:.3g} and L = {L:.3g}).")
                 
-                if not (spatial_factor * σ < L):
+                if not (spatial_factor * sigma < L):
                     raise ValueError(f"Non-satisfied condition : σ << L  (here σ = {sigma:.3g} and L = {L:.3g}).")
                 
                 if not (temporal_factor * dt < 2 * np.pi / omega): # time step - temporal period of the wave

@@ -57,6 +57,9 @@ class Domain:
         ax.grid(True)
 
 
+
+
+
 class SpatialDomain(Domain):
     def __init__(self, boundaries, N):
         super().__init__(boundaries, N)
@@ -79,7 +82,7 @@ class TemporalDomain(Domain):
 # Exemple d'utilisation
 if __name__ == "__main__":
     spatial_domain = SpatialDomain(boundaries=[-5, 5], N=20)
-    temporal_domain = TemporalDomain(boundaries=[0, 10], N=100)
+    temporal_domain = TemporalDomain(t_init = 0, t_end = 10, N=100)
 
     # Affichage des domaines
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 6))
