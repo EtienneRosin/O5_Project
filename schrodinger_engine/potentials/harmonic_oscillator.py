@@ -1,5 +1,5 @@
 from schrodinger_engine.potentials import Potential
-from schrodinger_engine.domains.test_domain import Domain
+from schrodinger_engine.utils.domain import Domain
 import numpy as np
 import matplotlib.pyplot as plt
 

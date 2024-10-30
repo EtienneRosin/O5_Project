@@ -4,8 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from abc import ABC, abstractmethod
 from typing import Union
-from schrodinger_engine.domains.test_domain import Domain
-from schrodinger_engine.utils.graphics.complex_fields import prepare_points_for_pcolormesh
+from schrodinger_engine.utils.domain import Domain
+from schrodinger_engine.utils.graphics.wave_function import prepare_points_for_pcolormesh
 
 from matplotlib.animation import FuncAnimation
 

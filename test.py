@@ -1,33 +1,36 @@
 import numpy as np
-import scipy as sp
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation, FFMpegWriter
 
-# Dimensions de la grille
-N_x = 80  # Taille de la grille dans la direction x
-N_y = 100  # Taille de la grille dans la direction y
-L_x = 10  # Longueur du domaine en x
-L_y = 15  # Longueur du domaine en y
+# Generate the grid
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(np.sqrt(X**2 + Y**2))
 
-# Calcul des fréquences pour chaque direction
-freq_x = np.fft.fftfreq(N_x, d=L_x / N_x)
-freq_y = np.fft.fftfreq(N_y, d=L_y / N_y)
+# Set up the figure
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
 
-# Grille de fréquences pour le domaine 2D
-Freq_X, Freq_Y = np.meshgrid(freq_x, freq_y, indexing='ij')
+# Initial surface plot
+surf = ax.plot_surface(X, Y, Z, cmap='viridis')
 
-# Vectoriser les fréquences pour obtenir un tableau 1D de longueur N_x * N_y
-Freq_X_flat = Freq_X.ravel()
-Freq_Y_flat = Freq_Y.ravel()
+def update(frame):
+    global surf
+    # Remove old surface
+    surf.remove()
+    # Generate new Z values
+    Z = np.sin(np.sqrt(X**2 + Y**2) + frame / 10)
+    # Plot new surface
+    surf = ax.plot_surface(X, Y, Z, cmap='viridis')
+    return surf,
 
-# Calcul de K pour chaque paire de fréquences
-K_values = 0.5 * (Freq_X_flat**2 + Freq_Y_flat**2)
+# ax.set_axis_off()
+# Create the animation
+ani = FuncAnimation(fig, update, frames=100, interval=50, blit=False)
 
-# Construction de la matrice diagonale K de taille (N_x * N_y, N_x * N_y)
-# K_matrix = np.diag(K_values)
-K_sparse = sp.sparse.diags(K_values)
+# Save the animation with specified DPI
+Writer = FFMpegWriter(fps=20, metadata=dict(artist='Me'))
+ani.save("high_quality_animation.mp4", writer=Writer, dpi=600)
 
-print(f"Taille de K_sparse : {K_sparse.shape}")  # Doit être (N_x * N_y, N_x * N_y)
-print(f"Taille mémoire de K_sparse : {K_sparse.data.nbytes} octets")
-
-# print(f"Taille de K_matrix : {K_matrix.shape}")  # Doit être (N_x * N_y, N_x * N_y)
-# print(f"Taille mémoire de K_matrix : {K_matrix.data.nbytes} octets")
-
+plt.show()

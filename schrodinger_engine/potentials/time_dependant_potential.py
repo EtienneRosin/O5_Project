@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from abc import ABC, abstractmethod
 from typing import Union
-from schrodinger_engine.domains.test_domain import Domain
+from schrodinger_engine.utils.domain import Domain
 from schrodinger_engine.potentials.potential import Potential
 
 class TimeDependentPotential(Potential):
