@@ -56,9 +56,13 @@ def configuration_is_consistent(
             
                 if not (temporal_factor * dt < 1 / potential.V_0):
                     raise ValueError(f"Non-satisfied condition : dt < ℏ/V_0  (here dt = {dt:.3g} and ℏ/V_0 = {1/potential.V_0:.3g}).")
-                
+            case 'Slit':
+                print(f"Slit has no consistency test")
+                pass
+            case 'DoubleSlit':
+                print(f"DoubleSlit has no consistency test")
             case _:
-                raise ValueError(f"Initial condition '{initial_condition.__class__.__name__}' has no consistency test.")
+                raise ValueError(f"potential '{potential.__class__.__name__}' has no consistency test.")
 
     return True
 

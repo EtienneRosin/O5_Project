@@ -22,7 +22,8 @@ class PeriodicSchrodingerSimulation:
         name: str = 'simulation',
         spatial_factor: int = 4,
         temporal_factor: int = 4,
-        overwrite: bool = False
+        overwrite: bool = False,
+        consistency_check: bool = True
         ) -> None:
         
         # Simulation properties
@@ -44,13 +45,14 @@ class PeriodicSchrodingerSimulation:
         self._save_path = f"{save_folder}/{name}.h5"
         self.save_file = self._setup_save_file()
         
-        configuration_is_consistent(
-            spatial_domain=spatial_domain, 
-            temporal_domain=temporal_domain, 
-            initial_condition=initial_condition, 
-            potential=potential, 
-            spatial_factor=spatial_factor, 
-            temporal_factor=temporal_factor)
+        if consistency_check:
+            configuration_is_consistent(
+                spatial_domain=spatial_domain, 
+                temporal_domain=temporal_domain, 
+                initial_condition=initial_condition, 
+                potential=potential, 
+                spatial_factor=spatial_factor, 
+                temporal_factor=temporal_factor)
         
         self._save_domains()
         if potential:
@@ -156,7 +158,7 @@ class PeriodicSchrodingerSimulation:
     
     def __del__(self):
         """Ensure the file is closed when ending the script."""
-        print("calling destructor")
+        # print("calling destructor")
         self.save_file.close()
         # self.close()
         

@@ -1,6 +1,5 @@
 from schrodinger_engine.initial_conditions import InitialCondition
 
-
 import numpy as np
 
 class GaussianWavePacket(InitialCondition):
@@ -136,7 +135,7 @@ if __name__ == '__main__':
     
     # # 2D Gaussian Wave Packet
     x_0_2d = [0, 0]
-    k_0_2d = [0.5, 0]
+    k_0_2d = [0.5, 0.25]
     sigma_2d = 10
     g_wave_packet_2d = GaussianWavePacket(x_0=x_0_2d, k_0=k_0_2d, sigma=sigma_2d, dim=2)
     g_wave_packet_2d.display()

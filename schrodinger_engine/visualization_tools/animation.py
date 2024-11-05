@@ -47,9 +47,10 @@ class SimulationReader:
         ax_prop.update({'xlabel': r"$x$"})
         if self.spatial_mesh.ndim == 3:
             ax_prop.update({'ylabel': r"$y$", 'zlabel': f"${self.wave_function_props[prop_to_display]['label']}$"})
+            ax_prop.update({'aspect': 'equalxy'})
         else:
             ax_prop.update({'ylabel': f"${self.wave_function_props[prop_to_display]['label']}$"})
-        
+       
         ax.set(**ax_prop)
         return fig, ax
     

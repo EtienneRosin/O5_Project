@@ -1,3 +1,21 @@
+"""
+This module defines a `Wall` potential class for simulating rectangular barrier potentials
+in quantum mechanical systems, designed for 1D and 2D applications. 
+
+The `Wall` class inherits from `Potential` and can be used to specify a wall potential of 
+given height, width, and location in a defined domain. It supports evaluation of potential
+energy at arbitrary points and can be visualized within a specified domain.
+
+Usage Example
+-------------
+To create a 2D wall potential and display it over a specified domain:
+
+>>> from schrodinger_engine.utils.domain import Domain
+>>> wall_2d = Wall(x_0=[0, 0], V_0=10, width=(2, 4), dim=2)
+>>> domain_2d = Domain(boundaries=[(-10, 10), (-10, 10)], N=[200, 200])
+>>> wall_2d.display(domain=domain_2d)
+>>> plt.show()
+"""
 from schrodinger_engine.potentials import Potential
 from schrodinger_engine.utils.domain import Domain
 import numpy as np
@@ -5,101 +23,76 @@ import matplotlib.pyplot as plt
 
 class Wall(Potential):
     """
-    Represents a Wall
+    Represents a rectangular wall potential, which can be used in one or two-dimensional 
+    quantum mechanical simulations. This wall potential imposes a barrier of constant 
+    potential energy within a specified region of space.
+    
+    Attributes
+    ----------
+    x_0 : np.ndarray
+        Center of the wall converted to an array format.
+    V_0 : float
+        Height of the wall.
+    dim : int
+        Dimension of the domain, either 1D or 2D.
+    width : np.ndarray
+        Width(s) of the wall in each dimension.
     """
     def __init__(self, x_0: float|np.ndarray, V_0: float, width: float|tuple, dim: int):
         """
-        @brief Initialize a wall potential
-        @param x_0: center of the wall
-        @param V_0: height of the wall
-        @param b: width of the wall
-        """
-        """
-        Initialize a wall potential.
+        Initialize a wall potential with specified center, height, width, and dimension.
 
         Parameters
         ----------
-        x_0: np.ndarray or float
-            initial center of the wall.
-        V_0: float
+        x_0 : float or np.ndarray
+            Center of the wall.
+        V_0 : float
             Height of the wall.
-        width: tuple or float
-            Width(s) of the wall.
-        dim: int
-            Dimension of the domain.
+        width : float or tuple of floats
+            Width of the wall in each dimension.
+        dim : int
+            Dimension of the wall, either 1 for 1D or 2 for 2D.
         """
-        self.x_0 = np.asarray(x_0)  # Convert x_0 to a numpy array
+        self.x_0 = np.asarray(x_0)
         self.V_0 = V_0
         self.dim = self._validate_dim(dim)
         self.width = np.array(width) if isinstance(width, (list, tuple, np.ndarray)) else np.array([width] * self.dim)
         
-
-    # def __call__(self, x: np.ndarray) -> np.ndarray:
-    #     """
-    #     Calculate the potential energy of the wall.
-    #     Parameters
-    #     ----------
-    #     x: np.ndarray
-    #         Positions (1D or 2D).
-    #     Returns
-    #     -------
-    #     Potential energy: np.ndarray
-    #     """
-    #     x = np.asarray(x)  # Ensure x is a numpy array
-
-    #     # if self.dim == 1:
-    #     #     inside_wall = (x >= self.x_0 - self.width / 2) & (x <= self.x_0 + self.width / 2)
-    #     # elif self.dim == 2:
-    #     #     inside_wall = np.ones(x.shape[1:], dtype=bool)
-    #     #     for i in range(self.dim):
-    #     #         lower_bound = self.x_0[i] - self.width[i] / 2
-    #     #         upper_bound = self.x_0[i] + self.width[i] / 2
-    #     #         inside_wall &= (x[i, :, :] >= lower_bound) & (x[i, :, :] <= upper_bound)
-
-    #     # potential_energy = np.where(inside_wall, self.V_0, 0.0)
-    #     # return potential_energy
-    #     inside_wall = np.ones(x[0].shape, dtype=bool)
-    #     for i in range(self.dim):
-    #         lower_bound = self.x_0[i] - self.width[i] / 2
-    #         upper_bound = self.x_0[i] + self.width[i] / 2
-    #         inside_wall &= (x[i] >= lower_bound) & (x[i] <= upper_bound)
-
-    #     potential_energy = np.where(inside_wall, self.V_0, 0.0)
-    #     return potential_energy
     def __call__(self, x: np.ndarray) -> np.ndarray:
         """
-        Calculate the potential energy of the wall.
-        
+        Calculate the potential energy of the wall at specified positions.
+
         Parameters
         ----------
-        x: np.ndarray
-            Positions (2D).
-        
+        x : np.ndarray
+            Array of positions where the potential energy is to be evaluated.
+            For 1D, this is a 1D array of coordinates.
+            For 2D, this is a 2D array of shape (2, N) representing N positions in 2D space.
+
         Returns
         -------
-        Potential energy: np.ndarray
+        np.ndarray
+            An array of potential energy values, with each element corresponding to
+            a position in the input array. Inside the wall, the value is `V_0`; outside,
+            it is zero.
         """
         match self.dim:
             case 1:
                 r = np.abs(x - self.x_0)
                 inside_wall = (r <= self.width / 2)
             case 2:
-                X = (x.T - self.x_0).T  # Centrage par rapport à x_0
+                X = (x.T - self.x_0).T
                 inside_wall = np.logical_and(np.abs(X[0]) <= self.width[0]/2, np.abs(X[1]) <= self.width[1]/2)
-                # np.stack((x[0], x[1]), axis=-1)
-                # inside_wall = np.stack((x[0], x[1]), axis=-1)
-                # print(f"{inside_wall.shape = }")
-                # print(f"{x.shape = }")
         potential_energy = np.where(inside_wall, self.V_0, 0.0).flatten()
         return potential_energy
 
 
 
 if __name__ == '__main__':
-    # wall_1d = Wall(x_0=0, V_0=10, width=1, dim=1)
-    # domain_1d = Domain(boundaries=[(-10, 10)], step=0.1)
-    # wall_1d.display(domain=domain_1d)
-    # plt.show()
+    wall_1d = Wall(x_0=0, V_0=10, width=1, dim=1)
+    domain_1d = Domain(boundaries=[(-10, 10)], step=0.1)
+    wall_1d.display(domain=domain_1d)
+    plt.show()
 
     domain_2d = Domain(boundaries=[(-10, 10), (-10, 10)], N=[200, 200])
     wall_2d = Wall(x_0=[0, 0], V_0=10, width=(2, 4), dim=2)
