@@ -16,8 +16,8 @@ dx = 0.05
 dx = 0.075
 # dx = 0.025
 
-T = 30
-T = 15
+T = 40
+# T = 15
 dt = 0.01
 dim = 2
 
@@ -55,7 +55,7 @@ animation_name = f"{'results'}/{simulation_name}_{prop_to_display}"
 reader = SimulationReader(file_path = f"{'results'}/{simulation_name}.h5")
 reader.animate_solution(
     prop_to_display=prop_to_display,
-    save_name = animation_name
+    # save_name = animation_name
     )
 
 
@@ -64,7 +64,7 @@ animation_name = f"{'results'}/{simulation_name}_{prop_to_display}"
 reader = SimulationReader(file_path = f"{'results'}/{simulation_name}.h5")
 reader.animate_solution(
     prop_to_display=prop_to_display,
-    save_name = animation_name
+    # save_name = animation_name
     )
 
 

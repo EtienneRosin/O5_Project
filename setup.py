@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="schrodinger_engine",
+    name="pss",
     version="0.1",
-    description="A project simulating the periodical unidimensionnal Scrödinger equation.",
+    description="A project simulating the periodical Scrödinger equation.",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     # url="https://github.com/votreusername/maggiver",

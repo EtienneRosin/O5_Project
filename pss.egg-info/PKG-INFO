@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: pss
+Version: 0.1
+Summary: A project simulating the periodical Scrödinger equation.
+Author: Etienne Rosin
+Author-email: etienne.alex.rosin@cern.ch
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: matplotlib
+Requires-Dist: tqdm
+Requires-Dist: cmasher
+
+This project deals with the 1 dimensionnal periodic Schrödinger equation.
+
+
+To run the simulation :
+    - go within the `O5_PROJECT/` folder in a terminal
+    - enter `pip install -e .` to install this project as developer
+    - find the `schrodinger_engine/simulation/simulation.py` file and run it
